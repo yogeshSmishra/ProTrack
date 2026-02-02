@@ -11,7 +11,7 @@ namespace ProTrack.Logic
         private readonly List<TaskItem> _tasks = new List<TaskItem>();
         private int _nextId = 1;
 
-        // Method to add a new task
+        // To add a new task
         public void AddTask(string title, string? description)
         {
             var newTask = new TaskItem
@@ -19,12 +19,12 @@ namespace ProTrack.Logic
                 Id = _nextId++,
                 Title = title,
                 Description = description,
-                Status = TaskStatus.Todo
+                Status = TrackStatus.Todo
             };
             _tasks.Add(newTask);
         }
 
-        // Method to get all tasks
+        // To get all tasks
         public List<TaskItem> GetAllTasks()
         {
             return _tasks;
