@@ -28,6 +28,7 @@ namespace ProTrack.Logic
             _tasks.Add(newTask);
         }
 
+
         // To get all tasks
         public List<TaskItem> GetAllTasks()
         {

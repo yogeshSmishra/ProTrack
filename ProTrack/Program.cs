@@ -1,12 +1,13 @@
 ﻿using ProTrack.Models;
 using ProTrack.Logic;
+using System;
 
-// Create an instance of our service to manage our data
 var service = new TaskLogic();
+int choice;
 
-Console.WriteLine("                 Welcome to ProTrack                 ");
+Console.WriteLine("--------------------Welcome to ProTrack--------------------");
 
-while (true)
+do
 {
     Console.WriteLine("\n--- MENU ---");
     Console.WriteLine("1. Add a Task");
@@ -14,30 +15,56 @@ while (true)
     Console.WriteLine("3. Exit");
     Console.Write("Select an option: ");
 
-    var choice = Console.ReadLine();
+    bool isValid = int.TryParse(Console.ReadLine(), out choice);
 
-    if (choice == "1")
+    if (!isValid)
     {
-        Console.Write("Enter Task Title: ");
-        string title = Console.ReadLine() ?? "Untitled";
-
-        Console.Write("Enter Description: ");
-        string description = Console.ReadLine() ?? "";
-
-        service.AddTask(title, description);
-        Console.WriteLine("Task added successfully!");
+        Console.WriteLine("Invalid input. Please enter a number between 1 and 3.");
+        continue;
     }
-    else if (choice == "2")
+
+    switch (choice)
     {
-        var tasks = service.GetAllTasks();
-        Console.WriteLine("\n--- YOUR TASKS ---");
-        foreach (var task in tasks)
-        {
-            Console.WriteLine($"[{task.Id}] {task.Title} - Status: {task.Status}");
-        }
+        case 1:
+            AddTask(service);
+            break;
+        case 2:
+            ShowTasks(service);
+            break;
+        case 3:
+            Console.WriteLine("Exiting..");
+            break;
+        default:
+            Console.WriteLine("Invalid choice. Please select a valid option.");
+            break;
     }
-    else if (choice == "3")
+} while (choice != 3);
+Console.WriteLine("Thank you for using ProTrack :)");
+
+
+//local functionss
+
+void AddTask(TaskLogic service)
+{
+    Console.Write("Enter Task Title: ");
+    string title = Console.ReadLine() ?? "Untitled";
+    Console.Write("Enter Description: ");
+    string description = Console.ReadLine() ?? "";
+    service.AddTask(title, description);
+    Console.WriteLine("Task added successfully!");
+}
+
+void ShowTasks(TaskLogic service)
+{
+    var tasks = service.GetAllTasks();
+    if (tasks.Count == 0)
     {
-        break;
+        Console.WriteLine("No tasks available.");
+        return;
+    }
+    Console.WriteLine("\n--- YOUR TASKS ---");
+    foreach (var task in tasks)
+    {
+        Console.WriteLine($"[{task.Id}] {task.Title} - Status: {task.Status}");
     }
 }
