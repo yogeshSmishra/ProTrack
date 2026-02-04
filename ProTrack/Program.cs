@@ -67,4 +67,5 @@ void ShowTasks(TaskLogic service)
     {
         Console.WriteLine($"[{task.Id}] {task.Title} - Status: {task.Status}");
     }
+    Console.WriteLine($"Total Tasks Created: {TaskLogic.GetTaskCount()}");
 }

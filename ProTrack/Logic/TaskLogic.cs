@@ -17,14 +17,21 @@ namespace ProTrack.Logic
         // To add a new task
         public void AddTask(string title, string? description)
         {
-            var newTask = new TaskItem
+            if(_tasks.Count >= Constants.MaxTaks)
             {
-                //this is Object initializer...one way to create objext and initialize without calling contructor.
-                Id = _nextId++,
-                Title = title,
-                Description = description,
-                Status = TrackStatus.Todo
-            };
+                Console.WriteLine("Cannot add more tasks. Maximum limit reached.");
+                return;
+            }
+            var newTask = new TaskItem
+             (
+                //this is using contructor.
+                _nextId,
+                title,
+                description
+            );
+            //write only property usage
+            newTask.SecretNote = "This is a secret";
+            _nextId++; // increment the nextId for the next task
             _tasks.Add(newTask);
         }
 
@@ -33,6 +40,11 @@ namespace ProTrack.Logic
         public List<TaskItem> GetAllTasks()
         {
             return _tasks;
+        }
+
+        public static int GetTaskCount()
+        {
+            return TaskItem.GetTotalTasks();
         }
     }
 }
