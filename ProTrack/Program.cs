@@ -12,7 +12,8 @@ do
     Console.WriteLine("\n--- MENU ---");
     Console.WriteLine("1. Add a Task");
     Console.WriteLine("2. View All Tasks");
-    Console.WriteLine("3. Exit");
+    Console.WriteLine("3. Delete a Task");
+    Console.WriteLine("4. Exit");
     Console.Write("Select an option: ");
 
     bool isValid = int.TryParse(Console.ReadLine(), out choice);
@@ -32,13 +33,16 @@ do
             ShowTasks(service);
             break;
         case 3:
+            DeleteTask(service);
+            break;
+        case 4:
             Console.WriteLine("Exiting..");
             break;
         default:
             Console.WriteLine("Invalid choice. Please select a valid option.");
             break;
     }
-} while (choice != 3);
+} while (choice != 4);
 Console.WriteLine("Thank you for using ProTrack :)");
 
 
@@ -68,4 +72,24 @@ void ShowTasks(TaskLogic service)
         Console.WriteLine($"[{task.Id}] {task.Title} - Status: {task.Status}");
     }
     Console.WriteLine($"Total Tasks Created: {TaskLogic.GetTaskCount()}");
+}
+
+void DeleteTask(TaskLogic service)
+{
+    Console.Write("Enter Task ID to delete: ");
+    bool isValid = int.TryParse(Console.ReadLine(), out int id);
+    if(!isValid)
+    {
+        Console.WriteLine("Invalid input. Please enter a valid Task ID.");
+        return;
+    }
+    bool deleted = service.DeleteTaskById(id);
+    if(deleted)
+    {
+        Console.WriteLine("Task deleted successfully.");
+    }
+    else
+    {
+        Console.WriteLine("Task not found.");
+    }
 }

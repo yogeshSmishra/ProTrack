@@ -20,7 +20,7 @@ namespace ProTrack.Models
 
         //Properties
         public int Id { get; private set; } // private set means Id can only be set within this class
-        public string Title { get; set; } // 'required' ensures a task always has a name
+        public string Title { get; set; }
         public string? Description { get; set; }   // '?' means the description can be empty
         public TrackStatus Status { get; set; }
 

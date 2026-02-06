@@ -46,5 +46,21 @@ namespace ProTrack.Logic
         {
             return TaskItem.GetTotalTasks();
         }
+
+
+        // To delete a task by its Id
+        public bool DeleteTaskById(int id)
+        {
+            for(int i = 0; i < _tasks.Count; i++)
+            {
+                if (_tasks[i].Id == id)
+                {
+                    _tasks.RemoveAt(i);
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }
